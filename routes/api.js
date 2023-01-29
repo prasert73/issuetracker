@@ -69,13 +69,11 @@ module.exports = function (app) {
         updateObj[key]=req.body[key];
         }
       });
-      console.log(req.body)
       if (!req.body._id) {return res.json({ error: 'missing _id' })};
       if (Object.keys(updateObj).length < 2) {
         return res.json({error: 'no update field(s) sent', _id: req.body._id})
       }
       updateObj.updated_on = new Date();
-      console.log(updateObj)
       issueModel.findByIdAndUpdate(req.body._id, updateObj, { new: true }, (error, updatedData)=>{
         if (!error && updatedData) {
           return res.json({ result: 'successfully updated',_id: req.body._id })
